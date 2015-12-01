@@ -1,4 +1,4 @@
-require 'jekyll/post'
+require 'jekyll/document'
 
 module RelatedPosts
 
@@ -12,20 +12,21 @@ module RelatedPosts
   # Calculate related posts.
   #
   # Returns [<Post>]
-  def related_posts(posts)
+  def related_posts
+  	posts = site.docs
     return [] unless posts.size > 1
-    highest_freq = Jekyll::Post.tag_freq(posts).values.max
+    highest_freq = Jekyll::Document.tag_freq(posts).values.max
     related_scores = Hash.new(0)
     posts.each do |post|
       post.tags.each do |tag|
-        if self.tags.include?(tag) && post != self
-          cat_freq = Jekyll::Post.tag_freq(posts)[tag]
+        if self.data["tags"].include?(tag) && post != self
+          cat_freq = Jekyll::Document.tag_freq(posts)[tag]
           related_scores[post] += (1+highest_freq-cat_freq)
         end
       end
     end
 
-    Jekyll::Post.sort_related_posts(related_scores)
+    Jekyll::Document.sort_related_posts(related_scores)
   end
 
   module ClassMethods
@@ -36,7 +37,7 @@ module RelatedPosts
       return @tag_freq if @tag_freq
       @tag_freq = Hash.new(0)
       posts.each do |post|
-        post.tags.each {|tag| @tag_freq[tag] += 1}
+        post.data["tags"].each {|tag| @tag_freq[tag] += 1}
       end
       @tag_freq
     end
@@ -59,7 +60,7 @@ module RelatedPosts
 end
 
 module Jekyll
-  class Post
+  class Document
     include RelatedPosts
     extend RelatedPosts::ClassMethods
   end
