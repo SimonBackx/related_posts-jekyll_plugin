@@ -15,5 +15,4 @@ can use it as follows:
   {% endfor %}
  
 == Licence
-Copyright (c) 2011-2012, Lawrence Woodman
 This software is licensed under an MIT Licence.  Please see the file, LICENCE.rdoc, for details.
