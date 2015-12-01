@@ -15,7 +15,4 @@ can use it as follows:
   {% endfor %}
  
 == Licence
-This is a fork of https://github.com/LawrenceWoodman/related_posts-jekyll_plugin
-Made it compatible with jekyll 3.0.
-
 This software is licensed under an MIT Licence.  Please see the file, LICENCE.rdoc, for details.
