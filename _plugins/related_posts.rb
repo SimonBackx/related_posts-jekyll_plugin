@@ -1,6 +1,6 @@
 require 'jekyll/document'
 
-module RelatedPosts
+module BetterRelatedPosts
 
   # Used to remove #related_posts so that it can be overridden
   def self.included(klass)
@@ -13,12 +13,12 @@ module RelatedPosts
   #
   # Returns [<Post>]
   def related_posts
-  	posts = site.docs
+  	posts = site.posts.docs
     return [] unless posts.size > 1
     highest_freq = Jekyll::Document.tag_freq(posts).values.max
     related_scores = Hash.new(0)
     posts.each do |post|
-      post.tags.each do |tag|
+      post.data["tags"].each do |tag|
         if self.data["tags"].include?(tag) && post != self
           cat_freq = Jekyll::Document.tag_freq(posts)[tag]
           related_scores[post] += (1+highest_freq-cat_freq)
@@ -61,7 +61,8 @@ end
 
 module Jekyll
   class Document
-    include RelatedPosts
-    extend RelatedPosts::ClassMethods
+    include BetterRelatedPosts
+    extend BetterRelatedPosts::ClassMethods
   end
 end
+
