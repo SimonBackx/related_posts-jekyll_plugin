@@ -14,5 +14,8 @@ can use it as follows:
     <a href="{{ post.url }}">{{ post.title }}</a><br />
   {% endfor %}
  
+== Compatibility
+This is a fork of LawrenceWoodmans related_posts plugin for Jekyll 2. This fork is compatible with Jekyll 3.
+ 
 == Licence
 This software is licensed under an MIT Licence.  Please see the file, LICENCE.rdoc, for details.
